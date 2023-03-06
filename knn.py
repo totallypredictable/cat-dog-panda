@@ -13,7 +13,9 @@ def main():
     logging.basicConfig(format="%(asctime)s - %(message)s", level=logging.INFO)
 
     ap = argparse.ArgumentParser()
-    ap.add_argument("-d", "--dataset", required=True, help="path to input dataset")
+    ap.add_argument(
+        "-d", "--dataset", required=True, help="path to input dataset"
+    )
     ap.add_argument(
         "-k",
         "--neighbors",
@@ -40,7 +42,9 @@ def main():
     (data, labels) = sdl.load(imagePaths, verbose=500)
     data = data.reshape((data.shape[0], 3072))
 
-    logging.info("features matrix: {:.1f}MB".format(data.nbytes / (1024 * 1000.0)))
+    logging.info(
+        "features matrix: {:.1f}MB".format(data.nbytes / (1024 * 1000.0))
+    )
 
     # encode the labels as integers
     le = LabelEncoder()
@@ -53,9 +57,15 @@ def main():
     )
 
     logging.info("evaluating kNN classifier...")
-    model = KNeighborsClassifier(n_neighbors=args["neighbors"], n_jobs=args["jobs"])
+    model = KNeighborsClassifier(
+        n_neighbors=args["neighbors"], n_jobs=args["jobs"]
+    )
     model.fit(trainX, trainY)
-    print(classification_report(testY, model.predict(testX), target_names=le.classes_))
+    print(
+        classification_report(
+            testY, model.predict(testX), target_names=le.classes_
+        )
+    )
 
 
 if __name__ == "__main__":
